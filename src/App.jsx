@@ -13,7 +13,7 @@ import Product3 from './pages/Product3.jsx'
 import Product4 from './pages/Product4.jsx'
 import Cart from './pages/Cart.jsx'
 import Contact from './pages/Contact.jsx'
-import CheckOut from './pages/Checkout.jsx'
+import CheckOut from './pages/CheckOut.jsx'
 import SearchBar from './components/SearchBar.jsx'
 import {useSearch} from './context/SearchContext.jsx'; 
 
