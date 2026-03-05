@@ -42,10 +42,20 @@ export default function Home() {
         }
     }
   
+    async function testApi(){
+      try{
+          const response = await api.get("/test");
+          if(response.data.status==200){
+              console.log(response.data.message);
+          }
+      }catch(e){
+          console.log(e);
+          showError("Có lỗi xảy ra khi lấy dữ liệu");
+      }
+    }
 
+  useEffect(()=>{testApi();getAllItems();getAllItems2()},[]);
 
-  useEffect(()=>{getAllItems();getAllItems2()},[]);
-  
   useEffect(() => {
     if (!loading && user?.VaiTro === "admin") {
       navigate("/admin");
