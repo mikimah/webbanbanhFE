@@ -18,13 +18,13 @@ export default function Register() {
     setLoading(true);
     setError({});
     try{
-      const response = await api.post('register/', {
+      const response = await api.post('/register', {
         name,
         email,
         password,
         password_confirmation: confirmPassword,
       });
-      //console.log(response.data);
+      console.log(response.data);
       if(response.data.status==200){
         showSuccess(response.data.message);
         navigate('/login');
