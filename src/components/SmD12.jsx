@@ -46,7 +46,11 @@ function SmD12(){
         console.log(image);
 
         try{
-            const response = await api.post("/category/add",formData);
+            const response = await api.post("/category/add",formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
             if(response.data.status==200){
                 showSuccess(response.data.message);
                 getAllItems();
