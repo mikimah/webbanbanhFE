@@ -43,11 +43,7 @@ function SmD12(){
         formData.append("image", image);
 
         try{
-            const response = await api.post("/category/add",formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" }
-                }
-            );
+            const response = await api.post("/category/add",formData);
             if(response.data.status==200){
                 showSuccess(response.data.message);
                 getAllItems();
