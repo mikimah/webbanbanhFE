@@ -15,6 +15,7 @@ import Cart from './pages/Cart.jsx'
 import Contact from './pages/Contact.jsx'
 import CheckOut from './pages/CheckOut.jsx'
 import SearchBar from './components/SearchBar.jsx'
+import TestUsers from './pages/TestUsers.jsx'
 import {useSearch} from './context/SearchContext.jsx'; 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           </div>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/users" element={<TestUsers />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/product" element={<Product />} />
