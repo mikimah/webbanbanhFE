@@ -13,6 +13,28 @@ function SmD12(){
     const [items,setItems]=useState([]);
 
 
+    async function upLoadImage(){
+        const formData = new FormData();
+        formData.append("file", image);
+        formData.append("upload_preset", "ml_default");
+        formData.append("cloud_name", "dvrxmp9gm");
+        
+        try {
+            const res = await fetch("https://api.cloudinary.com/v1_1/dvrxmp9gm/image/upload", {
+                method: "POST",
+                body: formData
+            });
+            
+            const uploadedImageURL = await res.json();
+    
+            return uploadedImageURL.secure_url; 
+        } catch(e) {
+            console.log(e);
+            showError("Có lỗi xảy ra khi upload hình ảnh");
+            throw e;
+        }
+    }
+
      function handleSetUpdate(item){
         setId(item.MaDM);
         setName(item.TenDM);
@@ -38,18 +60,12 @@ function SmD12(){
     async function handleAdd(e){
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append("name", name);
-        formData.append("image", image);
-
-        console.log(name);
-        console.log(image);
+        const uploadedImageURL = await upLoadImage();
 
         try{
-            const response = await api.post("/category/add",formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
+            const response = await api.post("/category/add",{
+                name: name,
+                image: uploadedImageURL
             });
             if(response.data.status==200){
                 showSuccess(response.data.message);
@@ -195,7 +211,7 @@ function SmD12(){
                             {item.TenDM}
                             </td>
                             <td className="col-span-1 p-2 flex items-center justify-center">
-                            <img className="h-20 w-20" src={item.image_url} alt="pic" />
+                            <img className="h-20 w-20" src={item.HinhDM} alt="pic" />
                             </td>
                             <td className="col-span-1 p-2 text-white flex items-center justify-center gap-10">
                             <button
