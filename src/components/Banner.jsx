@@ -1,4 +1,4 @@
-
+import bannerImg from '../assets/bannerImg.jpg';
 
 
 function Banner({title,type}) {

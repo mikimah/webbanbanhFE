@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import introImg from '../assets/introImg.jpg';
 
 function SmIntro() {
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ function SmIntro() {
     return (
         <div className="w-[100%] h-[40rem] flex  relative  font-inter">
             <div className="h-[100%] w-[35%]  flex items-center justify-end">
-                <img src="/src/assets/introImg.jpg" alt="picSmallIntro"
+                <img src={introImg} alt="picSmallIntro"
                 className="h-[75%] w-auto rounded-[5px]"
                 />
             </div>

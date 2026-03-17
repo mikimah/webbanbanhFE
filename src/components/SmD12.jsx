@@ -1,6 +1,7 @@
 import {Plus,Trash,Pencil} from 'lucide-react'
 import { useState,useEffect } from 'react';
 import api from '../api/api';
+import { upLoadImage } from '../utils/cloudinary';
 import { showError,showSuccess } from '../utils/notify';
 function SmD12(){
     const [search,setSearch]=useState('');
@@ -13,27 +14,27 @@ function SmD12(){
     const [items,setItems]=useState([]);
 
 
-    async function upLoadImage(){
-        const formData = new FormData();
-        formData.append("file", image);
-        formData.append("upload_preset", "ml_default");
-        formData.append("cloud_name", "dvrxmp9gm");
+    // async function upLoadImage(){
+    //     const formData = new FormData();
+    //     formData.append("file", image);
+    //     formData.append("upload_preset", "ml_default");
+    //     formData.append("cloud_name", "dvrxmp9gm");
         
-        try {
-            const res = await fetch("https://api.cloudinary.com/v1_1/dvrxmp9gm/image/upload", {
-                method: "POST",
-                body: formData
-            });
+    //     try {
+    //         const res = await fetch("https://api.cloudinary.com/v1_1/dvrxmp9gm/image/upload", {
+    //             method: "POST",
+    //             body: formData
+    //         });
             
-            const uploadedImageURL = await res.json();
+    //         const uploadedImageURL = await res.json();
     
-            return uploadedImageURL.secure_url; 
-        } catch(e) {
-            console.log(e);
-            showError("Có lỗi xảy ra khi upload hình ảnh");
-            throw e;
-        }
-    }
+    //         return uploadedImageURL.secure_url; 
+    //     } catch(e) {
+    //         console.log(e);
+    //         showError("Có lỗi xảy ra khi upload hình ảnh");
+    //         throw e;
+    //     }
+    // }
 
      function handleSetUpdate(item){
         setId(item.MaDM);
@@ -59,13 +60,16 @@ function SmD12(){
 
     async function handleAdd(e){
         e.preventDefault();
-
-        const uploadedImageURL = await upLoadImage();
+        const { status, url, message } = await upLoadImage(image);
+        if(status !== 200){
+            showError(message);
+            return;
+        }
 
         try{
             const response = await api.post("/category/add",{
                 name: name,
-                image: uploadedImageURL
+                image: url
             });
             if(response.data.status==200){
                 showSuccess(response.data.message);
