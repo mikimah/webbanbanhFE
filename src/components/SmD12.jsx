@@ -306,7 +306,7 @@ function SmD12(){
                     <label htmlFor="category_image2" className='text-lg font-semibold text-gray-700'>Hình ảnh:</label>
                     <input 
                     className='border border-gray-300 rounded-lg p-3 text-base file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-white hover:file:bg-amber-500 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-200'
-                    onChange={(e)=>setImage(e.target.files[0])}
+                    onChange={(e)=>{setImage(e.target.files[0])}}
                     type="file" id="category_image2" name="category_image2" accept="image/*"/>
                 </div>
 
