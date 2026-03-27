@@ -14,28 +14,6 @@ function SmD12(){
     const [items,setItems]=useState([]);
 
 
-    // async function upLoadImage(){
-    //     const formData = new FormData();
-    //     formData.append("file", image);
-    //     formData.append("upload_preset", "ml_default");
-    //     formData.append("cloud_name", "dvrxmp9gm");
-        
-    //     try {
-    //         const res = await fetch("https://api.cloudinary.com/v1_1/dvrxmp9gm/image/upload", {
-    //             method: "POST",
-    //             body: formData
-    //         });
-            
-    //         const uploadedImageURL = await res.json();
-    
-    //         return uploadedImageURL.secure_url; 
-    //     } catch(e) {
-    //         console.log(e);
-    //         showError("Có lỗi xảy ra khi upload hình ảnh");
-    //         throw e;
-    //     }
-    // }
-
      function handleSetUpdate(item){
         setId(item.MaDM);
         setName(item.TenDM);
@@ -60,7 +38,7 @@ function SmD12(){
 
     async function handleAdd(e){
         e.preventDefault();
-        const { status, url, message } = await upLoadImage(image);
+        const { status, url, public_id, message } = await upLoadImage(image);
         if(status !== 200){
             showError(message);
             return;
@@ -88,25 +66,37 @@ function SmD12(){
     async function handleUpdate(e){
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append("name", name);
-        if (image) {
-        formData.append("image", image);
+        // ✅ Kiểm tra input
+        if (!name.trim()) {
+            showError("Vui lòng nhập tên danh mục");
+            return;
         }
 
-        try{
-            const response = await api.post(`/category/${id}`,formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" }
+        try {
+            let imageUrl = null;
+            // ✅ Nếu có chọn ảnh mới thì upload
+            if (image) {
+                const { status, url, public_id, message } = await upLoadImage(image);
+                if(status !== 200){
+                    showError(message);
+                    return;
                 }
-            );
-            if(response.data.status==200){
+                imageUrl = url;
+            }
+
+            // ✅ Gửi API update
+            const response = await api.post(`/category/${id}`, {
+                name: name,
+                image: imageUrl // ✅ Nếu null thì backend không update ảnh
+            });
+
+            if(response.data.status == 200){
                 showSuccess(response.data.message);
                 getAllItems();
                 setUpdate(false);
                 resetVal();
             }
-        }catch(e){
+        } catch(e){
             console.log(e);
             showError("Có lỗi xảy ra");
         }
@@ -316,7 +306,7 @@ function SmD12(){
                     <label htmlFor="category_image2" className='text-lg font-semibold text-gray-700'>Hình ảnh:</label>
                     <input 
                     className='border border-gray-300 rounded-lg p-3 text-base file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-white hover:file:bg-amber-500 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-200'
-                    onChange={(e)=>setImage(e.target.files[0])}
+                    onChange={(e)=>{setImage(e.target.files[0])}}
                     type="file" id="category_image2" name="category_image2" accept="image/*"/>
                 </div>
 
