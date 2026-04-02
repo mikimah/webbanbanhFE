@@ -44,7 +44,7 @@ export default function Home() {
   
 
 
-  useEffect(()=>{getAllItems();getAllItems2()},[]);
+//   useEffect(()=>{getAllItems();getAllItems2()},[]);
 
   useEffect(() => {
     if (!loading && user?.VaiTro === "admin") {

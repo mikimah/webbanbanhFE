@@ -4,7 +4,7 @@ import ScrollToTop from './utils/ScrollToTop.jsx'
 import ProtectedRoute from './utils/ProtectedRoute.jsx'
 import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
-import DashBroad from './pages/DashBroad.jsx'
+import DashBoard from './pages/DashBoard.jsx'
 import Home from './pages/Home.jsx'
 import AboutUs from './pages/AboutUs.jsx'
 import Product from './pages/Product.jsx'
@@ -40,7 +40,7 @@ function App() {
           <Route path="/checkout" element={<CheckOut />} />
           <Route path="/login" target="_blank" element={<Login />} />
           <Route path="/register" target="_blank" element={<Register />} />
-          <Route path="/admin" element={<ProtectedRoute><DashBroad /></ProtectedRoute>} />
+          <Route path="/admin" element={<ProtectedRoute><DashBoard /></ProtectedRoute>} />
         </Routes>
           
     </>
