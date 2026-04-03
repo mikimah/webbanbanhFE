@@ -23,6 +23,7 @@ async function upLoadImage(image){
         return {
             status: 200,
             url: uploadedImageURL.secure_url,
+            public_id: uploadedImageURL.public_id,
             message: "Upload success"
         };
     } catch(e) {

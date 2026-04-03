@@ -49,7 +49,6 @@ function SmD12() {
         e.preventDefault();
         setIsAdding(true);
         const { status, url, public_id, message } = await upLoadImage(image);
-        void public_id;
         if (status !== 200) {
             showError(message);
             setIsAdding(false);
@@ -77,24 +76,37 @@ function SmD12() {
 
     async function handleUpdate(e) {
         e.preventDefault();
-        setIsUpdating(true);
-        const formData = new FormData();
-        formData.append('name', name);
-        if (image) {
-            formData.append('image', image);
+        // ✅ Kiểm tra input
+        if (!name.trim()) {
+            showError("Vui lòng nhập tên danh mục");
+            return;
         }
 
         try {
-            const response = await api.post(`/category/${id}`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
+            let imageUrl = null;
+            // ✅ Nếu có chọn ảnh mới thì upload
+            if (image) {
+                const { status, url, public_id, message } = await upLoadImage(image);
+                if(status !== 200){
+                    showError(message);
+                    return;
+                }
+                imageUrl = url;
+            }
+
+            // ✅ Gửi API update
+            const response = await api.post(`/category/${id}`, {
+                name: name,
+                image: imageUrl // ✅ Nếu null thì backend không update ảnh
             });
-            if (response.data.status == 200) {
+
+            if(response.data.status == 200){
                 showSuccess(response.data.message);
                 await getAllItems();
                 setUpdate(false);
                 resetVal();
             }
-        } catch (e) {
+        } catch(e){
             console.log(e);
             showError('Có lỗi xảy ra');
         } finally {
