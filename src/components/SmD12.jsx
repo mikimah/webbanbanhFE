@@ -76,6 +76,7 @@ function SmD12() {
 
     async function handleUpdate(e) {
         e.preventDefault();
+        setIsUpdating(true);
         // ✅ Kiểm tra input
         if (!name.trim()) {
             showError("Vui lòng nhập tên danh mục");
