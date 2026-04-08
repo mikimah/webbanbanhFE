@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import introImg from '../assets/introImg.jpg';
+import introImg from '../assets/images/introImg.jpg';
 
 function SmIntro() {
     const navigate = useNavigate();

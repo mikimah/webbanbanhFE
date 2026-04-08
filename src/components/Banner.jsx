@@ -1,18 +1,58 @@
-import bannerImg from '../assets/bannerImg.jpg';
+import bannerImgT2 from '../assets/images/bannerT2Img.png';
+import bannerImg from '../assets/images/bannerImg.png';
+import banner2Img from '../assets/images/banner2Img.png';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
 
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import '../assets/styles/Banner.css'; // ✅ Custom CSS
 
 function Banner({title,type}) {
+
+    const banners = [
+        { id: 1, url: bannerImg},
+        { id: 2, url: banner2Img},
+    ];
+
     function renderBanner(type){
         if(type === 1){
             return(
-                <div className="w-[100%] h-[100%] bg-[url(/src/assets/bannerImg.jpg)] bg-cover bg-center"></div>
+                <div className="w-[100%] h-[100%] ">
+                    <Swiper
+                        modules={[Navigation, Pagination, Autoplay]}
+                        spaceBetween={0}
+                        slidesPerView={1}
+                        navigation
+                        pagination={{ clickable: true }}
+                        autoplay={{ delay: 3000 }}
+                        loop={true} // ✅ Thêm loop để wrap around
+                        className="h-full overflow-hidden banner-swiper"
+                    >
+                        {banners.map((banner) => (
+                            <SwiperSlide key={banner.id}>
+                                <div 
+                                    className="w-full h-full bg-cover bg-center flex items-center justify-center"
+                                    style={{ backgroundImage: `url(${banner.url})` }}
+                                > 
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </div>
             );
         }else{
             return(
-                <div className="w-[100%] h-[100%] bg-[url(/src/assets/banner2Img.jpg)] bg-cover bg-center"></div>
+                <div 
+                    className="w-[100%] h-[100%] bg-cover bg-center"
+                    style={{ backgroundImage: `url(${bannerImgT2})` }}
+                >
+                </div>
             );
         }
     }
+
     function renderTitle(title){
         if(title){
             return(
@@ -22,28 +62,17 @@ function Banner({title,type}) {
                 </>
             );
         }else{
-            return(
-                <>
-                    <p className="absolute right-[5%] top-[30%] text-5xl font-light italic">
-                    Crafted with care, baked to perfection,
-                    </p>
-                    <p className="absolute right-[5%] top-[40%] text-5xl font-extralight italic">
-                        Your daily dose of joy
-                    </p>
-                </>
-            );
+            return null;
         }
     }
 
     return (
-        <div className={`w-[100%]  relative ${type === 1 ? 'h-[40rem]' : 'h-[20rem]' }`}>
-            <div className="w-[100%] h-[100%] bg-black/45 absolute text-white ">
+        <div className={`w-[100%] relative ${type === 1 ? 'h-[40rem]' : 'h-[20rem]' }`}>
+            <div className={`w-[100%] h-[100%]  absolute text-white `}>
                 {renderTitle(title)}
             </div>
             {renderBanner(type)}
-
         </div>
-        
     );
 }
 
