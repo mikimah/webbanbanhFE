@@ -1,6 +1,6 @@
-import img1 from '../assets/about1.jpg';
-import img2 from '../assets/about2.jpg';
-import img3 from '../assets/about3.jpg';
+import img1 from '../assets/images/about1.jpg';
+import img2 from '../assets/images/about2.jpg';
+import img3 from '../assets/images/about3.jpg';
 
 function SmAboutUs({type, title, msg, img}){
     

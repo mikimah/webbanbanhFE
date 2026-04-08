@@ -1,0 +1,35 @@
+
+
+/* ✅ Style cho Swiper navigation arrow */
+.banner-swiper .swiper-button-next,
+.banner-swiper .swiper-button-prev {
+    width: 45px;
+    height: 45px;
+    color: white;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.banner-swiper .swiper-button-next:hover,
+.banner-swiper .swiper-button-prev:hover {
+   
+    transform: scale(1.1);
+}
+
+/* ✅ Style cho Swiper pagination dot */
+.banner-swiper .swiper-pagination-bullet {
+    background-color: rgba(251, 191, 36, 0.5); /* Amber-400 mờ */
+    border: 2px solid #fbbf24;
+}
+
+.banner-swiper .swiper-pagination-bullet-active {
+    background-color: #fbbf24; /* Amber-400 */
+}
+
+/* ✅ Icon arrow */
+.banner-swiper .swiper-button-next::after,
+.banner-swiper .swiper-button-prev::after {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}

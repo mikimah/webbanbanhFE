@@ -1,5 +1,5 @@
 import DanhMucCard from "./DanhMucCard.jsx";
-import bgImg from '../assets/danhMucBg.jpg';
+import bgImg from '../assets/images/danhMucBg.jpg';
 
 function SmDanhMuc({items}) {
     function renderDanhMucCards() {
