@@ -11,7 +11,7 @@ function Dash2(){
         
         <div className="m-auto w-[95%] h-[95%] rounded-[5px] shadow-2xl bg-white">
         <div className='flex items-center justify-between p-9'>
-            <span className='text-3xl font-bold'>Quản lý người dùng</span>
+            <span className='text-3xl font-bold text-gray-700'>Quản lý người dùng</span>
             
         </div>
         
