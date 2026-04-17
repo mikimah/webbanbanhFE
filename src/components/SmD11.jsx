@@ -250,7 +250,7 @@ function SmD11() {
                                     >
                                         <td className="col-span-1 flex items-center justify-center p-2">{item.TenSP}</td>
                                         <td className="col-span-1 flex items-center justify-center p-2">{item.TenDM}</td>
-                                        <td className="col-span-1 flex items-center justify-center p-2">
+                                        <td className="col-span-1 flex items-center text-amber-600 justify-center p-2">
                                             {formatCurrency(item.GiaSP)}
                                         </td>
                                         <td className="col-span-1 flex items-center justify-center p-2">

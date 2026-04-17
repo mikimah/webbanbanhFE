@@ -33,13 +33,13 @@ function SideBar({handleSetPage,page}) {
             <div className='w-full flex flex-col items-center'>
                 {/* Logo Section */}
                 <div className="flex items-center my-5">
-                    <div  className="flex items-center gap-2">
+                    <div  className="flex items-center gap-2 scale-[0.9]">
                         <div className="bg-gradient-to-br from-amber-300 to-orange-400 p-2 rounded-full">
                             <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 2C9.243 2 7 4.243 7 7v1H6c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2V10c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5zm0 2c1.654 0 3 1.346 3 3v1H9V7c0-1.654 1.346-3 3-3zm6 6v10H6V10h12z"/>
                             </svg>
                         </div>
-                        <div>
+                        <div >
                             <h1 className="text-2xl font-bold text-amber-800">Amai Delight</h1>
                             <p className="text-xs text-amber-500 -mt-1">Premium Bakery</p>
                         </div>
