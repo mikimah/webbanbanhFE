@@ -187,9 +187,10 @@ function SmD11() {
                 <button
                     type="button"
                     onClick={() => setAdd(true)}
-                    className="flex items-center rounded-[5px] bg-amber-400 p-2 text-xl text-white duration-75 hover:cursor-pointer hover:bg-amber-600"
+                    disabled={isLoadingItems}
+                    className="flex items-center gap-2 rounded-[5px] bg-amber-400 p-2 text-xl text-white duration-75 hover:cursor-pointer hover:bg-amber-600 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                    <Plus size={30} />
+                    {isLoadingItems ? <ClipLoader loading={true} size={18} color="#ffffff" /> : <Plus size={30} />}
                     Thêm sản phẩm
                 </button>
             </div>
