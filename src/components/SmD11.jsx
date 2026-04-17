@@ -183,7 +183,7 @@ function SmD11() {
     return (
         <div className="w-full h-full relative">
             <div className="flex items-center justify-between p-9">
-                <span className="text-3xl font-bold">Quản lý sản phẩm</span>
+                <span className="text-3xl font-bold text-gray-700">Quản lý sản phẩm</span>
                 <button
                     type="button"
                     onClick={() => setAdd(true)}
@@ -238,7 +238,7 @@ function SmD11() {
                 </table>
                 <div className="h-[400px] w-full overflow-y-scroll">
                     {isLoadingItems ? (
-                        <div className="flex h-full items-center justify-center bg-gray-100">
+                        <div className="flex h-full items-center justify-center ">
                             <ClipLoader loading={true} size={36} color="#f59e0b" />
                         </div>
                     ) : (
@@ -251,7 +251,7 @@ function SmD11() {
                                     >
                                         <td className="col-span-1 flex items-center justify-center p-2">{item.TenSP}</td>
                                         <td className="col-span-1 flex items-center justify-center p-2">{item.TenDM}</td>
-                                        <td className="col-span-1 flex items-center justify-center p-2">
+                                        <td className="col-span-1 flex items-center text-amber-600 justify-center p-2">
                                             {formatCurrency(item.GiaSP)}
                                         </td>
                                         <td className="col-span-1 flex items-center justify-center p-2">

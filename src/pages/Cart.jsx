@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import {CircleX,Minus,Plus} from 'lucide-react';
 import { showError,showSuccess } from '../utils/notify';
 import api from '../api/api';
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 function Cart() {
@@ -16,6 +16,10 @@ function Cart() {
     const [shippingMethod, setShippingMethod] = useState("store");
     const [address, setAddress] = useState("");
     const [phone, setPhone] = useState("");
+    const [coupon, setCoupon] = useState("");
+    const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
+    const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
+    const [total, setTotal] = useState(0);
     const [errors, setErrors] = useState({ phone: false, address: false });
 
     function formatCurrency(value) {
@@ -57,6 +61,7 @@ function Cart() {
         try{
             const response = await api.post('/order',{
                 user: user ? user.MaND : null,
+                coupon: isApplyingCoupon? coupon : null,
                 phone,
                 address: shippingMethod === "home" ? address : "Nhận tại cửa hàng",
                 cart: cartData,
@@ -73,6 +78,40 @@ function Cart() {
 
    }
 
+   async function handleApplyCoupon(e){
+        e.preventDefault();
+        console.log({
+            TenKM: coupon,
+            MaND: user.MaND,
+            TongTotal: total
+        });
+        try{
+            const response = await api.post('/coupon/apply',{
+                TenKM: coupon,
+                MaND: user.MaND,
+                TongTotal: total
+            });
+            if(response.data.status==200){
+                console.log(response.data);
+                setIsApplyingCoupon(true);
+                setTotalAfterDiscount(response.data.tongTotalSauGiam);
+            }
+        }catch(e){
+            console.log(e);
+            setIsApplyingCoupon(false);
+            setTotalAfterDiscount(0);
+            setCoupon("");
+            showError("Có lỗi xảy ra khi áp dụng mã giảm giá");
+        }
+   }
+
+   useEffect(()=>{
+        setIsApplyingCoupon(false);
+        setTotalAfterDiscount(0);
+        setCoupon("");
+       const totalTemp = cart.reduce((sum, item) => sum + (item.GiaSP * item.qty), 0);
+       setTotal(totalTemp);
+   }, [cart]);
 
     return(<>
     <Header />
@@ -103,12 +142,12 @@ function Cart() {
                             <div className="w-[60%] h-auto flex items-center justify-between border">
                                 <button>
                                     <Minus onClick={()=>{decreaseQty(item.id)}}
-                                    className=" p-2 hover:bg-amber-500 hover:cursor-pointer duration-100" size={40}/>
+                                    className=" p-2 hover:bg-amber-500 hover:text-white hover:cursor-pointer duration-100" size={40}/>
                                 </button>
                                 <div className="h-10 flex items-center justify-center flex-1 text-xl text-center font-medium border-x">{item.qty}</div>
                                 <button>
                                     <Plus onClick={()=>{increaseQty(item.id)}}
-                                     className=" p-2 hover:bg-amber-500 hover:cursor-pointer duration-100" size={40}/>
+                                     className=" p-2 hover:bg-amber-500 hover:text-white hover:cursor-pointer duration-100" size={40}/>
                                 </button>    
                             </div></td>
                         <td className="col-span-1 flex items-center justify-center">{formatCurrency(item.GiaSP * item.qty)}</td>
@@ -122,9 +161,11 @@ function Cart() {
             </tbody>
         </table>
         <div className="w-full mb-8 p-3 py-4 bg-gray-50 flex items-center justify-end border border-gray-200 rounded-[5px] ">
-            <form onSubmit={()=>{console.log("apdung");}} 
+            <form onSubmit={handleApplyCoupon} 
             className="text-xl w-[25%]  flex items-center justify-center gap-2">
                 <input className="border border-gray-300 p-1 w-[50%] bg-white text-center rounded-[5px]"
+                value={coupon}
+                onChange={(e) => setCoupon(e.target.value)}
                 placeholder="Mã giảm giá"
                 type="text" />
                 <button type="submit" className="rounded-[5px] bg-amber-400 p-1 px-3 text-white">Áp dụng</button>
@@ -208,7 +249,16 @@ function Cart() {
                 {/* Tổng thành tiền */}
                 <div className="flex justify-between items-center border-b border-gray-300 pb-3">
                     <span className="text-lg text-gray-700">Tổng thành tiền:</span>
-                    <span className="text-2xl font-bold text-amber-500">{formatCurrency(cart.reduce((sum, item) => sum + (item.GiaSP * item.qty), 0))}</span>
+                    <span className="text-2xl font-bold text-amber-500">
+    { isApplyingCoupon ? (
+        <>
+            <span className="line-through text-sm font-light mr-1 text-gray-500">{formatCurrency(total)}</span>
+            <span>{formatCurrency(totalAfterDiscount)}</span>
+        </>
+    ) : (
+        formatCurrency(total)
+    )}
+</span>
                 </div>
 
                 {/* Nút thanh toán */}
